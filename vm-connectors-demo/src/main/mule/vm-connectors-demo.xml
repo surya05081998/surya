@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:vm="http://www.mulesoft.org/schema/mule/vm" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/vm http://www.mulesoft.org/schema/mule/vm/current/mule-vm.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d08891b8-1fd6-47eb-82ae-5a3eda2586cc" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<vm:config name="VM_Config" doc:name="VM Config" doc:id="bb8d7ab4-0236-4f44-9db4-22536b19b894" queues="" />
+	<vm:config name="VM_Config1" doc:name="VM Config" doc:id="5669f187-02ad-4c88-90e3-f2454b1d7401" >
+		<vm:queues >
+			<vm:queue queueName="surya.Q" />
+		</vm:queues>
+	</vm:config>
+	<vm:config name="VM_Config2" doc:name="VM Config" doc:id="59facdef-6489-4260-b623-3a28d2c983cf" >
+		<vm:queues >
+			<vm:queue queueName="temp" />
+		</vm:queues>
+	</vm:config>
+	<flow name="vm-connectors-demoFlow" doc:id="803fd66b-1527-45f9-9511-43b32697e7a9" >
+		<http:listener doc:name="Listener" doc:id="5578993b-a197-4326-aac5-31dfab74665f" config-ref="HTTP_Listener_config" path="vm"/>
+		<logger level="INFO" doc:name="Logger" doc:id="678d04b3-83a1-4e8d-a058-07a9c36381f5" message="#[payload]"/>
+		<vm:publish queueName="temp" doc:name="Publish" doc:id="5daab8fe-3ed3-4c32-b6e1-994405df3b38" config-ref="VM_Config2"/>
+	</flow>
+</mule>

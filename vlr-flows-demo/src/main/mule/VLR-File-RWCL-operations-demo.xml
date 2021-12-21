@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ftp="http://www.mulesoft.org/schema/mule/ftp" xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core"
+	xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd
+http://www.mulesoft.org/schema/mule/ftp http://www.mulesoft.org/schema/mule/ftp/current/mule-ftp.xsd">
+	<file:config name="File_Config" doc:name="File Config" doc:id="b9b4ca9e-de40-412c-84cf-18910272862c" />
+	<file:config name="File_Config1" doc:name="File Config" doc:id="6199121f-7b6c-49be-a91f-21d8fbd27cfe" />
+	<file:config name="File_Config2" doc:name="File Config" doc:id="388a7a85-aeb1-416b-bea1-bf9537d1279e" />
+	<file:config name="File_Config3" doc:name="File Config" doc:id="3a3e2f5e-2ee7-4d22-a319-2138c3fd9e4d" />
+	<file:config name="File_Config4" doc:name="File Config" doc:id="1585cb7e-acfe-4cc6-b10a-2579bbf31dd3" />
+	<ftp:config name="FTP_Config" doc:name="FTP Config" doc:id="d5692969-26ef-4075-ac3d-a1ded66ccbe5" >
+		<ftp:connection />
+	</ftp:config>
+	<file:config name="File_Config5" doc:name="File Config" doc:id="daa16ae2-2bce-4143-b54f-9a401c84afa8" />
+	<flow name="VLR-File-RWCL-operations-demoFlow" doc:id="38c3c25e-4743-4c94-9b58-0db5403198f3" >
+		<http:listener doc:name="Listener" doc:id="81f06c7f-d326-4cc8-bcf5-5d00593b42a6" config-ref="HTTP_Listener_config" path="File"/>
+		<file:read doc:name="Read" doc:id="d353b09c-b6b0-4852-ad51-e04b474b6dc5" config-ref="File_Config3" path="C:\Users\surya\Desktop\source\addresses.csv"/>
+		<ee:transform doc:name="Transform Message" doc:id="aa109d3b-a2fb-44c4-84d8-0a44a804d941" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/xml
+---
+f:
+r: payload]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<file:write doc:name="Write" doc:id="e1a5907c-9430-4fd4-9b27-2c2a70059e3a" config-ref="File_Config4" path="C:\Users\surya\Desktop\Destination\surya.txt"/>
+		<logger level="INFO" doc:name="Logger" doc:id="aa062962-4d1e-46f5-b178-26ac7d24b58b" message="#[payload]"/>
+	</flow>
+</mule>

@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="VLR-Async-Flows-DemoFlow" doc:id="b1cd385d-5a52-4dde-bd18-6cd97e1ffa5a" >
+		<http:listener doc:name="Listener" doc:id="2ca52fd8-1983-489b-8d97-0cbed930849b" config-ref="HTTP_Listener_config" path="async"/>
+		<logger level="INFO" doc:name="Logger1" doc:id="5124149b-5e53-4943-8675-00ce48e20852" message="Logger1"/>
+		<set-payload value="This is set payload" doc:name="Set Payload" doc:id="3f40006c-bd24-4c7c-a968-5234849a0e8e" />
+		<async doc:name="Async" doc:id="27ab1741-0799-4708-bda5-8867b3a449e8" >
+			<logger level="INFO" doc:name="Logger2" doc:id="5411b2fc-ac66-4e62-ac02-3aea861a19d7" message="Logger2"/>
+			<set-payload value="Async flow set payload" doc:name="Set Payload" doc:id="6d667f23-bc57-40a1-b0f6-b9c9cb6779d3" />
+			<logger level="INFO" doc:name="Logger3" doc:id="593dd3a2-8531-47a2-b9db-7e3bed29e520" message="Logger3"/>
+		</async>
+	</flow>
+</mule>

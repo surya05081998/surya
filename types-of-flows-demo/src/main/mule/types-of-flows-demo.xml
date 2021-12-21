@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="61296ca1-9804-4be4-a307-3390171f0dcc" basePath="surya" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="types-of-flows-demoFlow" doc:id="11d59241-9d29-40a8-85ca-e95d6eae491f" >
+		<http:listener doc:name="Listener" doc:id="617cafd1-dab2-4556-a0ba-5fd7c6543b87" config-ref="HTTP_Listener_config" path="mohan" allowedMethods="GET"/>
+		<logger level="INFO" doc:name="Logger" doc:id="de385702-545a-4026-b8f2-767deb999fb4" message="Main flow started"/>
+		<logger level="INFO" doc:name="Logger" doc:id="3cfbab24-dd10-4f09-9c46-15471585b1c8" message="connecting to subflow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="498dc8bf-dc56-4d6f-9f40-0c0ea50de5c5" name="subflow1"/>
+		<logger level="INFO" doc:name="Logger" doc:id="c7bdac30-eaec-4041-8dd9-231b957343fd" message="#[payload]]"/>
+	</flow>
+	<sub-flow name="subflow1" doc:id="85b9f016-8389-416e-ad57-d3b2702f5a3d" >
+		<logger level="INFO" doc:name="Logger" doc:id="5de836d5-ce7f-4c65-abd7-2436f6d9c1e0" message="starting subflow"/>
+		<set-payload value="subflow" doc:name="Set Payload" doc:id="3b2a09f4-0630-4592-b3ef-17b366373cab" />
+		<logger level="INFO" doc:name="Logger" doc:id="37d956f3-bb91-46db-b232-c0d6550098c5" message="#[payload]"/>
+	</sub-flow>
+</mule>

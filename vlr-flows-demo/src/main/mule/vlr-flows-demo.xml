@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="d43d36ed-ba5c-47be-9369-120c59f4b293" >
+		<http:listener-connection host="localhost" port="8081" />
+	</http:listener-config>
+	<flow name="vlr-flows-demoFlow" doc:id="7d7b0e1f-5566-4d18-a6e3-c969348c5854" >
+		<http:listener doc:name="Listener" doc:id="b5cdbd9d-3ef3-4f9d-9161-febaa85b121f" config-ref="HTTP_Listener_config" path="flows"/>
+		<logger level="INFO" doc:name="Logger1" doc:id="adcf392c-aa60-4fa9-9df6-d97a9548d524" message="hi this is starting of the main flow"/>
+		<flow-ref doc:name="Flow Reference" doc:id="ec3dad9b-0a5d-4758-9319-abfba903cfc9" name="vlr-flows-demoFlow1"/>
+		<set-payload value="Hi This is SetPayload" doc:name="Set Payload" doc:id="8325720d-2dd8-43e9-85cf-4517f7f4ca52" />
+	</flow>
+	<sub-flow name="vlr-flows-demoSub_Flow" doc:id="a14df1de-f5d9-4644-aadb-5ca241821369" >
+		<logger level="INFO" doc:name="sub-flow-Logger" doc:id="7f06180f-82e4-46bb-b389-4946f9604275" message="sub-flow-Logger"/>
+	</sub-flow>
+	<flow name="vlr-flows-demoFlow1" doc:id="f18b7d08-a17f-4a97-bdb0-462bf13f6bd4" >
+		<logger level="INFO" doc:name="Private -flow-Logger1" doc:id="eb0b7d78-ec22-4549-8e2f-f1d2a2609d56" message="Private -flow-Logger1"/>
+		<logger level="INFO" doc:name="Private -flow-Logger2" doc:id="303df13b-4aaf-4830-a254-d3854a00da86" message="Private -flow-Logger2"/>
+	</flow>
+</mule>

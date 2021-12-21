@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="9f726366-3653-471f-890c-4bae4783ce24" >
+		<http:listener-connection host="localhost" port="${http.port}" />
+	</http:listener-config>
+	<configuration-properties doc:name="Configuration properties" doc:id="61cf700c-2700-495e-90fc-c1f64f2304aa" file="config.properties" />
+	<flow name="sfdc-panther-lecture-4Flow" doc:id="3593bdd6-d988-4b36-9a52-4c025fd9a2cf" >
+		<http:listener doc:name="Listener" doc:id="25c8419f-7e10-4478-9675-ab70f5f5df0d" config-ref="HTTP_Listener_config" path="demoClass4"/>
+		<logger level="INFO" doc:name="Start Logger" doc:id="0f0a9566-8471-4a0e-a183-73b55a841dc6" message="#[payload]"/>
+		<set-variable value="${message}" doc:name="Set Variable" doc:id="13bdcb6c-7938-4940-be79-2f2fa1732a42" variableName="var1"/>
+		<set-payload value='#[vars.var1 ++ "you are working as a " ++ payload.role ++ " engineer in " ++ attributes.queryParams.company]' doc:name="Set Payload" doc:id="1db2f547-20fb-44f7-96a9-e992cfe652fb" />
+		<logger level="INFO" doc:name="Logger" doc:id="cc43ec2e-20dd-4b5f-9820-0663632ff935" message="main flow has completed successfully"/>
+	</flow>
+</mule>

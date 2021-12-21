@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:file="http://www.mulesoft.org/schema/mule/file" xmlns:email="http://www.mulesoft.org/schema/mule/email"
+	xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/email http://www.mulesoft.org/schema/mule/email/current/mule-email.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="480c4966-41cc-43a3-a410-ae3e6112f7e2" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<email:smtp-config name="Email_SMTP" doc:name="Email SMTP" doc:id="19cca320-62e6-4a6c-8bd0-d7dd269ea842" >
+		<email:smtp-connection host="smtp.gmail.com" user="suryamohanbml@gmail.com" password="surya@1998" >
+			<email:properties >
+				<email:property key="mail.smtp.starttls.enable" value="true" />
+			</email:properties>
+		</email:smtp-connection>
+	</email:smtp-config>
+	<file:config name="File_Config" doc:name="File Config" doc:id="566ccee4-55eb-4452-91fd-7d925c5fe9ce" />
+	<flow name="smtp-demoFlow" doc:id="e782be21-04de-4dc6-9362-1d587942e2f7" >
+		<http:listener doc:name="Listener" doc:id="7c44b178-f604-461f-a2e3-4d3c5df0da78" config-ref="HTTP_Listener_config" path="mail"/>
+		<file:read doc:name="Read" doc:id="30f26e6a-2983-498a-823b-b162c982a7b5" config-ref="File_Config" path="C:\Users\surya\Desktop\surya personal\Books\Surya's Personal.txt"/>
+		<logger level="INFO" doc:name="Logger" doc:id="79e9e0ba-6298-487a-a1dc-5e562a0731e6" message="#[payload]"/>
+		<email:send doc:name="Send" doc:id="4f6114c2-f864-4f29-9d09-d7624f0e6fe0" config-ref="Email_SMTP" subject="SMTP Test mail">
+			<email:to-addresses >
+				<email:to-address value="suryamohanbml@gmail.com" />
+			</email:to-addresses>
+			<email:attachments ><![CDATA[#["attachments.txt": payload]]]></email:attachments>
+		</email:send>
+		<logger level="INFO" doc:name="Logger" doc:id="e3621f31-6a5d-4628-a4dc-0c6ff7e6f78e" message="payload"/>
+	</flow>
+</mule>
