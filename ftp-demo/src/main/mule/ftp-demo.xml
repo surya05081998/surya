@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ftp="http://www.mulesoft.org/schema/mule/ftp" xmlns:file="http://www.mulesoft.org/schema/mule/file"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/file http://www.mulesoft.org/schema/mule/file/current/mule-file.xsd
+http://www.mulesoft.org/schema/mule/ftp http://www.mulesoft.org/schema/mule/ftp/current/mule-ftp.xsd">
+	<ftp:config name="FTP_Config" doc:name="FTP Config" doc:id="27584804-03f9-4aa6-819c-9a5b3dbc6a13" >
+		<ftp:connection workingDir="empdir" host="localhost" username="ftpuser" password="ftpuser" />
+	</ftp:config>
+	<flow name="ftp-demoFlow" doc:id="9a2b66bc-b36b-4dde-90f9-83776600a1f6" >
+		<scheduler doc:name="Scheduler" doc:id="0a9848b4-ac8c-44a6-be14-2bfd01c7e24e" >
+			<scheduling-strategy >
+				<fixed-frequency frequency="1" timeUnit="MINUTES"/>
+			</scheduling-strategy>
+		</scheduler>
+		<logger level="INFO" doc:name="Start Logger" doc:id="db64213e-2ea8-475d-b14a-9ff41467d610" message="the process has started"/>
+		<ftp:read doc:name="Read" doc:id="1eadcf75-a234-4aa8-9038-587057273d48" config-ref="FTP_Config" path="emp.csv"/>
+		<logger level="INFO" doc:name="Logger" doc:id="23f94a9d-d61b-4116-b43a-bb11dce5d3b2" message="#[payload]"/>
+	</flow>
+</mule>

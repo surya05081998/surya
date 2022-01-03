@@ -1,0 +1,40 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<types:mule xmlns:types="http://www.mulesoft.org/schema/mule/types">
+  <types:catalog>
+    <types:type name="empdatacsv" format="csv">
+      <types:shape format="weave" example="examples/empdata.csv"><![CDATA[%dw 2.0
+
+type empdatacsv = Array<{|  id: Number,   name: String,   status: String,   salary: Number|}> {"isQuotedString": "false",
+"header": "true",
+"headerLineNumber": "0"}
+
+]]></types:shape>
+      <types:properties>
+        <types:property name="headerLineNumber" value="0"/>
+        <types:property name="header" value="true"/>
+        <types:property name="isQuotedString" value="false"/>
+      </types:properties>
+    </types:type>
+    <types:type name="jsonobjectdata" format="json">
+      <types:shape format="weave" example="examples/empedata.json"><![CDATA[%dw 2.0
+
+type jsonobjectdata = Array<{|  id: String,   name: String,   status: String,   salary: Number {"typeId": "int"}|}> {"example": "[{\\\"id\\\":\\\"1\\\",\\\"name\\\":\\\"surya\\\",\\\"status\\\":\\\"A\\\",\\\"salary\\\":1200000},{\\\"id\\\":\\\"1\\\",\\\"name\\\":\\\"surya\\\",\\\"status\\\":\\\"A\\\",\\\"salary\\\":1200000}]"}
+
+]]></types:shape>
+    </types:type>
+  </types:catalog>
+  <types:enrichment select="#bdbeedc1-1b59-4d04-8468-ea973e09953d">
+    <types:processor-declaration>
+      <types:input-event>
+        <types:message>
+          <types:payload type="empdatacsv"/>
+        </types:message>
+      </types:input-event>
+      <types:output-event>
+        <types:message>
+          <types:payload type="jsonobjectdata"/>
+        </types:message>
+      </types:output-event>
+    </types:processor-declaration>
+  </types:enrichment>
+</types:mule>
