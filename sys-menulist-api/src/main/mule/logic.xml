@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<flow name="logicFlow" doc:id="f36e8029-61cd-4369-81e2-192f945c3052" >
+		<http:request method="GET" doc:name="Request" doc:id="277df525-2306-43ce-bc20-859a1c884063" url="https://run.mocky.io/v3/9a3a2ebf-b73d-4acc-a9a3-9558a61f755a">
+			<http:query-params ><![CDATA[#[output application/json
+---
+{
+	clientID: 123,
+    clientSecret: "suryamohan rao"
+}]]]></http:query-params>
+		</http:request>
+	</flow>
+</mule>

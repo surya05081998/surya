@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:apikit="http://www.mulesoft.org/schema/mule/mule-apikit"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/mule-apikit http://www.mulesoft.org/schema/mule/mule-apikit/current/mule-apikit.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd">
+	<configuration doc:name="Configuration" doc:id="0d9602b7-9b80-4332-97fc-f39352e9d512" defaultErrorHandler-ref="errorsError_Handler" />
+	<http:request-config name="EXP_HTTP_Request_configuration" doc:name="HTTP Request configuration" doc:id="3fe18d22-b519-4dfa-b66b-3ae235ae1ab2" >
+		<http:request-connection host="localhost" port="8081" />
+	</http:request-config>
+	<apikit:config outboundHeadersMapName="outboundHeadersMapName" httpStatusVarName="httpStatus" doc:name="Router" doc:id="a86a6bb4-e0ac-4494-bea0-7b9a44c94443" name="Router" api="resource::9bd5b47e-cf0d-4e84-b2a2-4a30cf2058cd:exp-menulist-api:1.0.0:raml:zip:exp-menulist-api.raml" disableValidations="true"/>
+</mule>
